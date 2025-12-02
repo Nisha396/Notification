@@ -1,2 +1,2 @@
 # Notification
-Development and Deployment of Notification Service using Java, Kafka,Docker, AWS
+Development and Deployment of Notification Service using Java, Kafka,Docker, Kubernates, Jenkins
