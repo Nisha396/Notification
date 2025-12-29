@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: my-app
+  template:
+    metadata:
+      labels:
+        app: my-app
+    spec:
+      containers:
+      - name: my-container
+        image: my-image:latest
+        ports:
+        - containerPort: 80
+          env:
+            - name: USERNAME
+              valueFrom:
+                  secretKeyRef:
+                    name: my-secret
+                    key: username
+            - name: PASSWORD
+              valueFrom:
+                  secretKeyRef:
+                      name: my-secret
+                      key: password
+            - name: CONFIG_VALUE
+              valueFrom:
+                  configMapKeyRef:
+                    name: my-config
+                    key: value
+        resources:
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+      restartPolicy: Always
