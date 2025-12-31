@@ -31,7 +31,7 @@ jobs:
             git config --global user.name "github-actions"
             git config --global user.email "github-actions@github.com"
             git add manifests/Deployment.yaml
-            git commit -m "Update image tag to ${{ IMAGE_TAG }}"
+            git commit -m "Update image tag to ${IMAGE_TAG}"
             git push origin main
               
 
