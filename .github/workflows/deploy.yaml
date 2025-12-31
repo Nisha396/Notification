@@ -1,0 +1,37 @@
+name: Code Deployment Pipeline
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+    build-and-push-image:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Checkout repository
+          uses: actions/checkout@v4
+
+        - name: Set Image Tag
+          run: echo "IMAGE_TAG=${{ github.run_number }}-${{ github.sha }}" >> $GITHUB_ENV
+
+        - name: Build the Docker image
+          run: docker build -t ${{ secrets.username }}/notification-service:${{ IMAGE_TAG }} .
+
+        - name: Log in to Docker Hub
+          run: echo ${{ secrets.password }} | docker login -u ${{ secrets.username }} --password-stdin
+
+        - name: Push the Docker image
+          run: docker push ${{ secrets.username }}/notification-service:${{ IMAGE_TAG }}
+
+        - name: Update Image Tag in Deployment Manifest
+          run: sed -i 's/IMAGE_TAG/'${{ IMAGE_TAG }}'/g' manifests/Deployment.yaml
+
+        - name: Commit and push updated manifest
+          run: |
+            git config --global user.name "github-actions"
+            git config --global user.email "github-actions@github.com"
+            git add manifests/Deployment.yaml
+            git commit -m "Update image tag to ${{ IMAGE_TAG }}"
+            git push origin main
+              
+
