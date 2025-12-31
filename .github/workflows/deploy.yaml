@@ -27,7 +27,7 @@ jobs:
           run: docker push ${{ secrets.username }}/notification-service:${IMAGE_TAG}
 
         - name: Update Image Tag in Deployment Manifest
-          run: sed -i "s|notification-service:.*|notification-service:${IMAGE_TAG}/g" manifests/Deployment.yaml
+          run: sed -i "s|notification-service:.*|notification-service:${IMAGE_TAG}|g" manifests/Deployment.yaml
 
         - name: Commit and push updated manifest
           run: |
