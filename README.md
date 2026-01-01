@@ -234,7 +234,9 @@ kubectl get secret argocd-initial-admin-secret \
 
 📷 **Screenshots**
 
-<img width="600" height="467" alt="image" src="https://github.com/user-attachments/assets/f77f6cb6-4045-48e8-8796-2fe4d8cfc185" />
+Architecture
+
+<img width="1400" height="933" alt="image" src="https://github.com/user-attachments/assets/aa3d743b-8395-4144-8014-13c752ed26fd" />
 
 Argo CD UI
 
