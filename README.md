@@ -88,7 +88,9 @@ Automated image version updates
 🧪 **API Endpoints (Sample)**
 
 POST /notifications/send
+
 Sample Request
+
 {
     "messageId": 123,
     "sender": "no-reply@example.com",
@@ -97,18 +99,23 @@ Sample Request
     "message": "Welcome to the service! Your account is ready.",
     "sentAt": "2025-12-03T14:30:00"
 }
+
 Sample Response
+
 {
   "Notification sent"
 }
 
 POST /notifications/getMessage/1
+
 Sample Response
+
 {
   "Message found with Id: 1"
 }
 
 🐳 **Dockerization**
+
 Build Docker Image
 docker build -t notification-service:latest .
 
@@ -163,105 +170,75 @@ Rollbacks via Git history
 🖥️ **Setting up Minikube & Argo CD on AWS EC2 (Ubuntu)**
 
 Install Docker
+
 sudo apt update
+
 sudo apt install -y docker.io
+
 sudo usermod -aG docker ubuntu
+
 newgrp docker
+
 docker ps
 
 Install kubectl
+
 curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+
 chmod +x kubectl
+
 sudo mv kubectl /usr/local/bin/
+
 kubectl version --client
 
 Install Minikube
+
 curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+
 chmod +x minikube-linux-amd64
+
 sudo mv minikube-linux-amd64 /usr/local/bin/minikube
+
 minikube version
 
 Start Minikube
+
 minikube start \
 --driver=docker \
 --cpus=2 \
 --memory=6000
+
 kubectl get nodes
 
 Enable Ingress
+
 minikube addons enable ingress
 
 🚦 Install Argo CD
+
 kubectl create namespace argocd
+
 kubectl apply -n argocd \
 -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 
 Access Argo CD UI
+
 kubectl port-forward svc/argocd-server -n argocd 8080:443
 
 https://<EC2-PUBLIC-IP>:8080
 
 Get Admin Password
+
 kubectl get secret argocd-initial-admin-secret \
 -n argocd -o jsonpath="{.data.password}" | base64 -d
 
 📷 **Screenshots**
 
-Deployment Architecture
-
-┌──────────────────────────────┐
-│        GitHub Repository     │
-│  - Application Code          │
-│  - Dockerfile                │
-│  - K8s Manifests             │
-└──────────────┬───────────────┘
-               │
-               ▼
-┌──────────────────────────────┐
-│     GitHub Actions (CI)      │
-│  - Build & Test              │
-│  - Docker Image Build        │
-│  - Push Image                │
-└──────────────┬───────────────┘
-               │
-               ▼
-┌──────────────────────────────┐
-│   Container Registry         │
-│   (DockerHub / ECR)          │
-└──────────────┬───────────────┘
-               │
-               ▼
-┌─────────────────────────────────────────────┐
-│        Kubernetes Cluster (Minikube)         │
-│                                             │
-│  ┌───────────────────────────────────────┐  │
-│  │  Argo CD                               │  │
-│  │  - Watches GitHub Repo                 │  │
-│  │  - Syncs K8s Manifests                 │  │
-│  └──────────────┬────────────────────────┘  │
-│                 │                           │
-│                 ▼                           │
-│  ┌───────────────────────────────────────┐  │
-│  │  Notification Service Deployment       │  │
-│  │  - Spring Boot App                     │  │
-│  │  - Docker Container                   │  │
-│  │  - H2 Database (Embedded)              │  │
-│  └───────────────────────────────────────┘  │
-│                                             │
-│  ┌───────────────────────────────────────┐  │
-│  │  Kubernetes Service (NodePort/ClusterIP)│ │
-│  └───────────────────────────────────────┘  │
-│                                             │
-└─────────────────────────────────────────────┘
-               ▲
-               │
-        Client / Postman / Browser
-
+<img width="600" height="467" alt="image" src="https://github.com/user-attachments/assets/f77f6cb6-4045-48e8-8796-2fe4d8cfc185" />
 
 Argo CD UI
 
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/32a261f0-57d9-48ff-80f1-3311fabf4319" />
-
 
 Kubernetes Resources
 
