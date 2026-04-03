@@ -2,6 +2,11 @@ apiVersion: v1
 kind: Role
 metadata:
   name: notification-role
+  namespace: notification-namespace
+  labels:
+    app: notif-app
+  annotations:
+    description: "This is a role for my notification application"
 rules:
 - apiGroups: [""]
   resources: ["pods"]
