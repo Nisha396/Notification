@@ -26,8 +26,8 @@ spec:
             - name: PASSWORD
               valueFrom:
                   secretKeyRef:
-                      name: notification-secret
-                      key: password
+                    name: notification-secret
+                    key: password
             - name: CONFIG_VALUE
               valueFrom:
                   configMapKeyRef:
