@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Role
+metadata:
+  name: notification-role
+rules:
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["get", "watch", "list"]
+- apiGroups: ["apps"]
+  resources: ["deployments"]
+  verbs: ["get", "watch", "list"]

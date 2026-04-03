@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: my-deployment
+  name: notification-deployment
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: my-app
+      app: notif-app
   template:
     metadata:
       labels:
-        app: my-app
+        app: notif-app
     spec:
       containers:
       - name: my-container
@@ -21,17 +21,17 @@ spec:
             - name: USERNAME
               valueFrom:
                   secretKeyRef:
-                    name: my-secret
+                    name: notification-secret
                     key: username
             - name: PASSWORD
               valueFrom:
                   secretKeyRef:
-                      name: my-secret
+                      name: notification-secret
                       key: password
             - name: CONFIG_VALUE
               valueFrom:
                   configMapKeyRef:
-                    name: my-config
+                    name: notification-config
                     key: value
         resources:
           limits:
@@ -40,4 +40,28 @@ spec:
           requests:
             memory: "256Mi"
             cpu: "250m"
+        livenessProbe:
+          httpGet:
+            - path: /health
+              port: 80
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+          successThreshold: 1
+        readinessProbe:
+          httpGet:
+            - path: /ready
+              port: 80
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+          successThreshold: 1
+        startupProbe:
+          httpGet:
+            - path: /health
+              port: 80
+          failureThreshold: 30
+          periodSeconds: 10
       restartPolicy: Always
