@@ -47,8 +47,8 @@ spec:
             cpu: "250m"
         livenessProbe:
           httpGet:
-            - path: /health
-              port: 80
+            path: /health
+            port: 80
           initialDelaySeconds: 30
           periodSeconds: 10
           timeoutSeconds: 5
@@ -56,8 +56,8 @@ spec:
           successThreshold: 1
         readinessProbe:
           httpGet:
-            - path: /ready
-              port: 80
+            path: /ready
+            port: 80
           initialDelaySeconds: 30
           periodSeconds: 10
           timeoutSeconds: 5
@@ -65,8 +65,8 @@ spec:
           successThreshold: 1
         startupProbe:
           httpGet:
-            - path: /health
-              port: 80
+            path: /health
+            port: 80
           failureThreshold: 30
           periodSeconds: 10
       restartPolicy: Always
