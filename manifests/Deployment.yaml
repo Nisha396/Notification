@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
       - name: my-container
-        image: nishabansal19/notification-service:29-740ed6a12608fc3f258d9d70c6d936dd3e854b7a
+        image: nishabansal19/notification-service:30-98d2028adb7a064abd471224bdb02b03c935d944
         ports:
         - containerPort: 8080
           env:
