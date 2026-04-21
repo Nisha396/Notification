@@ -1,247 +1,184 @@
-🔔 **Notification Service**
+# 🚀 Spring Boot Notification Service on Kubernetes (GitOps with Argo CD)
 
-End-to-End Development & GitOps Deployment using Java, Docker, Kubernetes, GitHub Actions & Argo CD
+## 📌 Overview
 
-📌 **Overview**
+This project demonstrates deploying a Spring Boot application on Kubernetes using **GitOps principles with Argo CD** and an automated **CI/CD pipeline**. The application is containerized, built via CI, and deployed automatically to Kubernetes.
 
-This project demonstrates the design, development, containerization, and GitOps-based deployment of a Notification Service built using Java (Spring Boot) and deployed on Kubernetes (Minikube) running on an AWS EC2 Ubuntu instance.
+---
 
-The focus of this project is to showcase:
+## 🏗️ Architecture
 
-Backend service development
+```text
+Developer → GitHub → CI Pipeline → Docker Image → Argo CD → Kubernetes Cluster
+```
 
-REST-based inter-service communication
+---
 
-CI/CD automation
+## ⚙️ Tech Stack
 
-Kubernetes deployment
+* Java (Spring Boot)
+* Docker
+* Kubernetes (Minikube on EC2)
+* Argo CD (GitOps)
+* CI/CD Pipeline (GitHub Actions / similar)
+* AWS EC2
 
-GitOps using Argo CD
+---
 
-🏗️ **System Architecture (REST-based Communication)**
+## 🔄 CI/CD Pipeline
 
-Client
-  |
-  v
-Notification Controller (Spring Boot)
-  |
-  v
-Notification Service
-  |
-  v
-External Service / Mock API
+The CI/CD pipeline automates build and deployment:
 
-🔹 **Architecture Explanation**
+### CI (Continuous Integration)
 
-Client sends notification requests via REST API
+* Code pushed to GitHub triggers pipeline
+* Application is built using Maven
+* Docker image is created
+* Image is pushed to Docker registry
 
-Spring Boot Controller handles incoming requests
+### CD (Continuous Deployment via Argo CD)
 
-Business logic is processed in the Service layer
+* Argo CD watches Git repository
+* Detects updated image/tag in manifests
+* Automatically syncs changes to Kubernetes cluster
 
-Communication with downstream services is done using RestTemplate
+---
 
-Application is containerized using Docker
+## 🔧 Features Implemented
 
-Deployed to Kubernetes via Argo CD (GitOps)
+* ✅ Containerized Spring Boot application using Docker
+* ✅ Automated CI/CD pipeline for build and deployment
+* ✅ GitOps-based deployment using Argo CD
+* ✅ Kubernetes Deployment & Service configuration
+* ✅ Externalized configuration using ConfigMaps and Secrets
+* ✅ Environment variable mapping using Spring Boot conventions
+* ✅ Health checks using Actuator endpoints
 
-🧰 **Tech Stack**
+---
 
-Backend
+## 🐞 Key Debugging & Fixes
 
-Java 21
+* Fixed **annotation too long error** during Argo CD install
+* Resolved **Argo CD OutOfSync issues** due to config drift
+* Fixed **port mismatch (80 vs 8080)** in Kubernetes
+* Debugged **startup/liveness probe failures**
+* Resolved **Hibernate dialect error** by correct env variable mapping
+* Fixed **NodePort & Minikube networking issues**
+* Enabled **H2 console and actuator endpoints**
 
-Spring Boot
+---
 
-REST APIs
+## 📁 Project Structure
+.
+├── k8s/
+│   ├── deployment.yaml
+│   ├── service.yaml
+│   ├── configmap.yaml
+│   ├── secret.yaml
+├── Dockerfile
+├── application.properties
+├── .github/workflows/   # CI/CD pipeline
+└── README.md
 
-RestTemplate
+---
 
-DevOps & Cloud
+## 🔐 Configuration Management
 
-Docker
+### ConfigMap
 
-Kubernetes (Minikube)
+* Stores non-sensitive configuration (DB URL)
 
-GitHub Actions (CI)
+### Secret
 
-Argo CD (CD / GitOps)
+* Stores sensitive data (username, password)
 
-AWS EC2 (Ubuntu)
+### Environment Variables
 
-🚀 **Features**
 
-REST-based Notification Service
+SPRING_DATASOURCE_URL
+SPRING_DATASOURCE_USERNAME
+SPRING_DATASOURCE_PASSWORD
 
-Dockerized Spring Boot application
+---
 
-Kubernetes manifests for deployment
+## 🚀 Deployment Flow
 
-CI pipeline using GitHub Actions
+1. Developer pushes code to GitHub
+2. CI pipeline builds Docker image
+3. Image pushed to registry
+4. Argo CD detects changes in manifests
+5. Argo CD syncs and deploys to Kubernetes
 
-GitOps-based continuous deployment with Argo CD
+---
 
-Declarative Kubernetes configuration
+## 🌐 Access Application
 
-Automated image version updates
 
-🧪 **API Endpoints (Sample)**
+kubectl port-forward svc/notification-service -n notification-namespace 8081:80 --address 0.0.0.0
 
-POST /notifications/send
+Access:
+http://<EC2-PUBLIC-IP>:8081
 
-Sample Request
+---
 
-{
-    "messageId": 123,
-    "sender": "no-reply@example.com",
-    "recipient": "user@example.com",
-    "title": "Welcome",
-    "message": "Welcome to the service! Your account is ready.",
-    "sentAt": "2025-12-03T14:30:00"
-}
+## ❤️ Health Checks
 
-Sample Response
+* `/actuator/health`
+* Liveness & Readiness probes configured
 
-{
-  "Notification sent"
-}
+---
 
-POST /notifications/getMessage/1
+## 🧪 Testing
 
-Sample Response
+* APIs tested using Postman
+* Verified endpoints via port-forward and NodePort
 
-{
-  "Message found with Id: 1"
-}
+---
 
-🐳 **Dockerization**
+## 📸 Screenshots
 
-Build Docker Image
-docker build -t notification-service:latest .
+* CI pipeline run (GitHub Actions)
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/a7692c7d-7dbd-40fe-bd8c-85354ed01493" />
 
-Run Locally
-docker run -p 8080:8080 notification-service
+* Argo CD dashboard (Synced/Healthy)
+  <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/546b08fc-f95d-4afa-bcfa-f77c78754d2f" />
 
-☸️ **Kubernetes Deployment**
+* Kubernetes pods running
+  <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/9d709d5a-b1eb-4280-b25c-49f4a89382ea" />
 
-Kubernetes manifests are maintained under:
+* API response in Postman
+  <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/da864b42-c038-4be1-aac3-067b43e31eb5" />
 
-manifests/
+---
 
+## 📈 Future Enhancements
 
-Includes:
+* 🔜 Prometheus & Grafana monitoring
+* 🔜 Ingress for domain-based routing
+* 🔜 Deployment on AWS EKS
 
-Deployment
+---
 
-Service
+## 🎯 Key Learnings
 
-ConfigMap
+* GitOps workflow using Argo CD
+* Kubernetes networking and service exposure
+* Debugging real-world deployment issues
+* Managing configuration using Secrets and ConfigMaps
+* Integrating CI/CD with Kubernetes deployments
 
-Secret
+---
 
-Image tags are dynamically updated during CI/CD.
+## 🙌 Conclusion
 
-🔁 **CI/CD Pipeline (GitHub Actions)**
+This project demonstrates a complete DevOps workflow:
 
-CI Flow
+* CI pipeline builds and pushes images
+* Argo CD handles continuous deployment
+* Kubernetes runs and manages the application
 
-Code pushed to GitHub
+---
 
-GitHub Actions triggered
+## 📬 Contact
 
-Maven build & test
-
-Docker image build
-
-Image pushed to container registry
-
-Deployment manifests updated with new image tag
-
-🔄 **GitOps with Argo CD**
-
-Argo CD continuously monitors the GitHub repository and ensures:
-
-Kubernetes cluster state matches Git state
-
-Automatic application sync on manifest changes
-
-Rollbacks via Git history
-
-🖥️ **Setting up Minikube & Argo CD on AWS EC2 (Ubuntu)**
-
-Install Docker
-
-sudo apt update
-
-sudo apt install -y docker.io
-
-sudo usermod -aG docker ubuntu
-
-newgrp docker
-
-docker ps
-
-Install kubectl
-
-curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
-
-chmod +x kubectl
-
-sudo mv kubectl /usr/local/bin/
-
-kubectl version --client
-
-Install Minikube
-
-curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
-
-chmod +x minikube-linux-amd64
-
-sudo mv minikube-linux-amd64 /usr/local/bin/minikube
-
-minikube version
-
-Start Minikube
-
-minikube start \
---driver=docker \
---cpus=2 \
---memory=6000
-
-kubectl get nodes
-
-Enable Ingress
-
-minikube addons enable ingress
-
-🚦 Install Argo CD
-
-kubectl create namespace argocd
-
-kubectl apply -n argocd \
--f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
-
-Access Argo CD UI
-
-kubectl port-forward svc/argocd-server -n argocd 8080:443
-
-https://<EC2-PUBLIC-IP>:8080
-
-Get Admin Password
-
-kubectl get secret argocd-initial-admin-secret \
--n argocd -o jsonpath="{.data.password}" | base64 -d
-
-📷 **Screenshots**
-
-Architecture
-
-<img width="1400" height="933" alt="image" src="https://github.com/user-attachments/assets/aa3d743b-8395-4144-8014-13c752ed26fd" />
-
-Argo CD UI
-
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/32a261f0-57d9-48ff-80f1-3311fabf4319" />
-
-Kubernetes Resources
-
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/4af0f7f1-903f-4f9f-b5ca-1918de89e90d" />
+Feel free to connect for feedback or collaboration!
