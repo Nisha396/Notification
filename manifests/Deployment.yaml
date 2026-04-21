@@ -33,11 +33,9 @@ spec:
                   secretKeyRef:
                     name: notification-secret
                     key: password
-            - name: CONFIG_VALUE
-              valueFrom:
-                  configMapKeyRef:
+              envFrom:
+              - configMapRef:
                     name: notification-config
-                    key: value
         resources:
           limits:
             memory: "512Mi"
