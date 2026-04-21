@@ -23,17 +23,17 @@ spec:
         ports:
         - containerPort: 8080
         env:
-          - name: USERNAME
+          - name: SPRING_DATASOURCE_USERNAME
             valueFrom:
                 secretKeyRef:
                   name: notification-secret
                   key: username
-          - name: PASSWORD
+          - name: SPRING_DATASOURCE_PASSWORD
             valueFrom:
                 secretKeyRef:
                   name: notification-secret
                   key: password
-          - name: CONFIG_VALUE
+          - name: SPRING_DATASOURCE_URL
             valueFrom:
               configMapKeyRef:
                     name: notification-config
