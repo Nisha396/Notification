@@ -22,20 +22,22 @@ spec:
         image: nishabansal19/notification-service:32-02024c0ef3a0215e3c9fdcedb74385ad7b0faa6c
         ports:
         - containerPort: 8080
-          env:
-            - name: USERNAME
-              valueFrom:
-                  secretKeyRef:
-                    name: notification-secret
-                    key: username
-            - name: PASSWORD
-              valueFrom:
-                  secretKeyRef:
-                    name: notification-secret
-                    key: password
-              envFrom:
-              - configMapRef:
+        env:
+          - name: USERNAME
+            valueFrom:
+                secretKeyRef:
+                  name: notification-secret
+                  key: username
+          - name: PASSWORD
+            valueFrom:
+                secretKeyRef:
+                  name: notification-secret
+                  key: password
+          - name: CONFIG_VALUE
+            valueFrom:
+              configMapKeyRef:
                     name: notification-config
+                    key: value
         resources:
           limits:
             memory: "512Mi"
