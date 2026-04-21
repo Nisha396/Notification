@@ -117,7 +117,7 @@ SPRING_DATASOURCE_PASSWORD
 kubectl port-forward svc/notification-service -n notification-namespace 8081:80 --address 0.0.0.0
 
 Access:
-http://<EC2-PUBLIC-IP>:8081
+http://EC2-PUBLIC-IP:8081
 
 ---
 
