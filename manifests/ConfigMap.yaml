@@ -8,4 +8,4 @@ metadata:
   annotations:
     description: "This is a config map for my notification application"
 data:
-      value: "Hello World"
+      value: "jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE"
