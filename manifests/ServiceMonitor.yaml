@@ -1,0 +1,17 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: notification-service-monitor
+  namespace: notification-namespace
+  labels:
+    app: notif-service-monitor
+  annotations:
+    description: "This is a ServiceMonitor for my notification application"
+spec:
+  selector:
+    matchLabels:
+      app: notif-app
+  endpoints:
+    - port: http
+      interval: 30s
+      timeout: 10s
