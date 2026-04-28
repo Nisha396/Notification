@@ -4,7 +4,7 @@ metadata:
   name: notification-service-monitor
   namespace: notification-namespace
   labels:
-    app: notif-service-monitor
+    release: prometheus
   annotations:
     description: "This is a ServiceMonitor for my notification application"
 spec:
