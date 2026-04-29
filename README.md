@@ -6,13 +6,13 @@ This project demonstrates a complete end-to-end DevOps workflow by deploying a S
 
 ## ⚙️ Tech Stack
 
-**Backend**: Spring Boot
-**Containerization**: Docker
-**Orchestration**: Kubernetes (Minikube on EC2)
-**CI/CD**: GitHub Actions
-**GitOps**: Argo CD
-**Monitoring**: Prometheus
-**Visualization**: Grafana
+* Backend: Spring Boot
+* Containerization: Docker
+* Orchestration: Kubernetes (Minikube on EC2)
+* CI/CD: GitHub Actions
+* GitOps: Argo CD
+* Monitoring: Prometheus
+* Visualization: Grafana
 
 ## 🔧 Features Implemented
 
@@ -58,7 +58,6 @@ Environment variables are managed using:
 ## 📊 Monitoring Setup
 
 Prometheus
-
 Metrics exposed via: /actuator/prometheus
 
 Scraped using ServiceMonitor
