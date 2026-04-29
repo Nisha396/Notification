@@ -263,7 +263,9 @@ Properly injected DB properties using environment variables.
 
 
 SPRING_DATASOURCE_URL
+
 SPRING_DATASOURCE_USERNAME
+
 SPRING_DATASOURCE_PASSWORD
 
 ## 🌐 Access Application
@@ -291,9 +293,9 @@ http://EC2-PUBLIC-IP:8081
 
 ## 📈 Future Enhancements
 
-🔔 Add Prometheus alerting rules
-🌐 Add Ingress for external access
-☁️ Deploy on AWS EKS
+* 🔔 Add Prometheus alerting rules
+* 🌐 Add Ingress for external access
+* ☁️ Deploy on AWS EKS
 
 ---
 
