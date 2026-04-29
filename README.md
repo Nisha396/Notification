@@ -2,7 +2,7 @@
 
 ## 📌 Overview
 
-This project demonstrates deploying a Spring Boot application on Kubernetes using **GitOps principles with Argo CD** and an automated **CI/CD pipeline**. The application is containerized, built via CI, and deployed automatically to Kubernetes.
+This project demonstrates a complete end-to-end DevOps workflow by deploying a Spring Boot-based notification service on Kubernetes using GitOps principles, along with monitoring and observability.    
 
 ---
 
