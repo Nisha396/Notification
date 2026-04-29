@@ -140,6 +140,7 @@ Sync via Argo CD UI
 ## 🔍 Real-World Challenges & Fixes
 
 🔴 1. Argo CD Sync Issues (OutOfSync state)
+
 Problem:
 Application showed OutOfSync even after successful deployment.
 
@@ -150,6 +151,7 @@ Solution:
 Used ignoreDifferences in Argo CD Application to ignore env field differences.
 
 🔴 2. Missing argocd-initial-admin-secret
+
 Problem:
 Secret not created when installing Argo CD using kubectl apply.
 
@@ -160,6 +162,7 @@ Solution:
 Re-applied manifests using standard kubectl apply without server-side flag.
 
 🔴 3. Startup Probe Failures
+
 Problem:
 Pods running but showing startup probe failed.
 
@@ -170,6 +173,7 @@ Solution:
 Aligned container port with application port (8080).
 
 🔴 4. Service Connectivity Issues
+
 Problem:
 Unable to access the application using NodePort from external system.
 
@@ -187,6 +191,7 @@ Then accessed the application via:
 http://<EC2-Public-IP>:8081
 
 🔴 5. Prometheus Not Scraping Metrics
+
 Problem:
 Metrics not visible in Prometheus targets.
 
@@ -201,6 +206,7 @@ Matched Service labels with ServiceMonitor selector
 Used correct port name (not port number)
 
 🔴 6. Grafana Showing No Data
+
 Problem:
 Queries working in Prometheus but not in Grafana.
 
@@ -217,6 +223,7 @@ Fixed label filters
 Used proper regex (=~ with .*)
 
 🔴 7. CPU Metrics Confusion
+
 Problem:
 CPU panel showing kubelet/system metrics instead of application metrics.
 
@@ -230,6 +237,7 @@ Removed invalid filters (container, image)
 Used correct label-based filtering
 
 🔴 8. Spring Boot Configuration Failure (JPA)
+
 Problem:
 Application failed with:
 
