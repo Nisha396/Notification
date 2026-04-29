@@ -189,7 +189,7 @@ kubectl port-forward -n notification-namespace svc/notification-service 8081:80 
 
 Then accessed the application via:
 
-http://<EC2-Public-IP>:8081
+http://EC2-Public-IP:8081
 
 🔴 5. Prometheus Not Scraping Metrics
 
