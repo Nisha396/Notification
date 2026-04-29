@@ -74,26 +74,32 @@ The dashboard includes:
 🔹 CI pipeline run (GitHub Actions)
 
  <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/a7692c7d-7dbd-40fe-bd8c-85354ed01493" />
+ 
 
 🔹 Argo CD dashboard (Synced/Healthy)
 
  <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/546b08fc-f95d-4afa-bcfa-f77c78754d2f" />
+ 
 
 🔹 Kubernetes pods running
 
  <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/9d709d5a-b1eb-4280-b25c-49f4a89382ea" />
+ 
 
 🔹 API response in Postman
 
  <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/da864b42-c038-4be1-aac3-067b43e31eb5" />
+ 
 
 🔹 Prometheus Targets (UP)
 
  <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/99657ee6-7a56-45a5-b22e-09f8de5ec6ba" />
+ 
 
 🔹 Grafana Dashboard
 
  <img width="1920" height="1080" alt="grafana-dashboard" src="https://github.com/user-attachments/assets/ee6ebb25-0909-4172-a9c0-3abde3ee4969" />
+ 
 
 
 ## 📈 Sample PromQL Queries
