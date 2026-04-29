@@ -58,16 +58,18 @@ Environment variables are managed using:
 ## 📊 Monitoring Setup
 
 Prometheus
+
 Metrics exposed via: /actuator/prometheus
+
 Scraped using ServiceMonitor
 
 ## Grafana Dashboard
 
 The dashboard includes:
-✅ Application Health (up)
-✅ Requests per second
-✅ CPU Usage (container-level)
-✅ JVM Memory usage
+* ✅ Application Health (up)
+* ✅ Requests per second
+* ✅ CPU Usage (container-level)
+* ✅ JVM Memory usage
 
 ## 📸 Screenshots
 
