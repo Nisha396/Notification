@@ -28,7 +28,7 @@ spec:
             summary: "High CPU usage detected for notification application"
             description: "The CPU usage for the notification application has exceeded 50% for the last 2 minutes. Please check the performance of the application."
         - alert: ApplicationDown
-          expr: up{namespace="notification-namespace"} == 0
+          expr: kube_deployment_spec_replicas{namespace="notification-namespace"} == 0
           for: 1m
           labels:
             severity: critical
