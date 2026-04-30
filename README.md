@@ -70,6 +70,12 @@ The dashboard includes:
 * ✅ CPU Usage (container-level)
 * ✅ JVM Memory usage
 
+## 🚨 Alerting
+
+Implemented alerting using PrometheusRule and Alertmanager
+Created custom alert for application downtime
+Handles edge cases like scale-to-zero deployments
+
 ## 📸 Screenshots
 
 🔹 CI pipeline run (GitHub Actions)
@@ -100,6 +106,11 @@ The dashboard includes:
 🔹 Grafana Dashboard
 
  <img width="1920" height="1080" alt="grafana-dashboard" src="https://github.com/user-attachments/assets/ee6ebb25-0909-4172-a9c0-3abde3ee4969" />
+
+🔹 Alerting from Promethus UI
+
+ <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/62cc7aaf-ba4d-4460-a5ef-4674412a39b1" />
+
  
 
 
