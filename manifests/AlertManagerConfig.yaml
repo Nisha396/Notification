@@ -1,0 +1,17 @@
+apiVersion: monitoring.coreos.com/v1alpha1
+kind: AlertmanagerConfig
+metadata:
+  name: notification-alertmanager-config
+  namespace: notification-namespace
+  labels:
+    release: prometheus
+  annotations:
+    description: "This is an AlertmanagerConfig for my notification application"
+spec:
+  route:
+    receiver: 'notification-receiver'
+  receivers:
+    - name: 'notification-receiver'
+      emailConfigs:
+        - to: 'nishabansal19@gmail.com'
+          from: 'nishabansal19@gmail.com' 

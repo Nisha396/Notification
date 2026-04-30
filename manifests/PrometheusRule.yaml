@@ -1,0 +1,29 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: notification-prometheus-rule
+  namespace: notification-namespace
+  labels:
+    release: prometheus
+  annotations:
+    description: "This is a PrometheusRule for my notification application"
+spec:
+  groups:
+    - name: notification.rules
+      rules:
+        - alert: HighErrorRate
+          expr: rate(http_requests_total{app="notif-app", status=~"5.."}[5m]) > 0.05
+          for: 10m
+          labels:
+            severity: critical
+          annotations:
+            summary: "High error rate detected for notification application"
+            description: "The error rate for the notification application has exceeded 5% for the last 10 minutes. Please investigate the issue."
+        - alert: HighCPUUsage
+          expr: sum(rate(container_cpu_usage_seconds_total{namespace="notification-namespace"}[5m])) > 0.5
+          for: 2m
+          labels:
+            severity: warning
+          annotations:
+            summary: "High CPU usage detected for notification application"
+            description: "The CPU usage for the notification application has exceeded 50% for the last 2 minutes. Please check the performance of the application."
