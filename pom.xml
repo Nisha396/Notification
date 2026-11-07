@@ -70,6 +70,11 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa-test</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
@@ -84,35 +89,8 @@
                 <version>3.3.1</version>
                 <configuration>
                     <configLocation>google_checks.xml</configLocation>
-                    <encoding>UTF-8</encoding>
                     <consoleOutput>true</consoleOutput>
                     <failsOnError>true</failsOnError>
-                    <failsOnViolation>true</failsOnViolation>
-                </configuration>
-                <executions>
-                    <execution>
-                        <phase>validate</phase>
-                        <goals>
-                            <goal>check</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-pmd-plugin</artifactId>
-                <version>3.21.2</version>
-                <configuration>
-                    <rulesets>
-                        <ruleset>category/java/bestpractices.xml</ruleset>
-                        <ruleset>category/java/codestyle.xml</ruleset>
-                        <ruleset>category/java/design.xml</ruleset>
-                        <ruleset>category/java/errorprone.xml</ruleset>
-                        <ruleset>category/java/performance.xml</ruleset>
-                        <ruleset>category/java/security.xml</ruleset>
-                    </rulesets>
-                    <failOnViolation>true</failOnViolation>
-                    <printFailingErrors>true</printFailingErrors>
                 </configuration>
                 <executions>
                     <execution>

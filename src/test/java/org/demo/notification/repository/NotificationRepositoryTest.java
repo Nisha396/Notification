@@ -1,11 +1,9 @@
 package org.demo.notification.repository;
 
 import org.demo.notification.model.NotificationMessage;
-import org.demo.notification.producer.NotificationProducer;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
 
 import java.time.LocalDateTime;
 import java.util.List;

@@ -27,15 +27,15 @@ jobs:
           run: hadolint Dockerfile
 
         - name: Codeql Analysis
-          uses: github/github/codeql-action/init@v3
+          uses: github/github-codeql-action/init@v3
           with:
             languages: java
 
         - name: Auto build Java application
-          run: github/github/codeql-action/autobuild@v3
+          run: github/github-codeql-action/autobuild@v3
 
         - name: Analyze code with CodeQL
-          uses: github/github/codeql-action/analyze@v3
+          uses: github/github-codeql-action/analyze@v3
 
         - name: Build the Docker image
           run: docker build -t ${{ secrets.username }}/notification-service:${IMAGE_TAG} .
