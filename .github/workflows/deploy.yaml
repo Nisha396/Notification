@@ -18,18 +18,24 @@ jobs:
           run: echo "IMAGE_TAG=${{ github.run_number }}-${{ github.sha }}" >> $GITHUB_ENV
 
         - name: Lint java code
-          run: ./gradlew check
+          run: ./mvnw verify
 
         - name: Run unit tests
-          run: ./gradlew test
+          run: ./mvnw test
 
         - name: Lint Dockerfile
           run: hadolint Dockerfile
 
         - name: Codeql Analysis
-          uses: github/codeql-action/analyze@v2
+          uses: github/github/codeql-action/init@v3
           with:
-            category: "/language:java"
+            languages: java
+
+        - name: Auto build Java application
+          run: github/github/codeql-action/autobuild@v3
+
+        - name: Analyze code with CodeQL
+          uses: github/github/codeql-action/analyze@v3
 
         - name: Build the Docker image
           run: docker build -t ${{ secrets.username }}/notification-service:${IMAGE_TAG} .
