@@ -35,8 +35,10 @@ jobs:
         - name: Analyze code with CodeQL
           uses: github/codeql-action/analyze@v3
 
-        - name: Lint Dockerfile
-          run: hadolint Dockerfile
+        - name: Run Hadolint
+          uses: hadolint/hadolint-action@v3.1.0
+          with:
+            dockerfile: Dockerfile
 
         - name: Build the Docker image
           run: docker build -t ${{ secrets.username }}/notification-service:${IMAGE_TAG} .
