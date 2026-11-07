@@ -6,6 +6,7 @@ on:
 
 permissions:
   contents: write
+  security-events: write
 
 jobs:
     build-and-push-image:
@@ -15,33 +16,27 @@ jobs:
           uses: actions/checkout@v4
 
         - name: Set up JDK 17
-          uses: actions/setup-java@v3
+          uses: actions/setup-java@v4
           with:
             java-version: '17'
-            distribution: 'temurin'S
+            distribution: 'temurin'
 
         - name: Set Image Tag
           run: echo "IMAGE_TAG=${{ github.run_number }}-${{ github.sha }}" >> $GITHUB_ENV
 
-        - name: Lint java code
-          run: ./mvnw verify
-
-        - name: Run unit tests
-          run: ./mvnw test
-
-        - name: Lint Dockerfile
-          run: hadolint Dockerfile
-
-        - name: Codeql Analysis
+        - name: Initilaize Codeql
           uses: github/github-codeql-action/init@v3
           with:
             languages: java
 
-        - name: Auto build Java application
-          uses: github/github-codeql-action/autobuild@v3
+        - name: Lint and Build
+          run: ./mvnw clean verify
 
         - name: Analyze code with CodeQL
           uses: github/github-codeql-action/analyze@v3
+
+        - name: Lint Dockerfile
+          run: hadolint Dockerfile
 
         - name: Build the Docker image
           run: docker build -t ${{ secrets.username }}/notification-service:${IMAGE_TAG} .
@@ -70,5 +65,3 @@ jobs:
             git add manifests/Deployment.yaml
             git commit -m "Update image tag to ${IMAGE_TAG}"
             git push origin main
-              
-
