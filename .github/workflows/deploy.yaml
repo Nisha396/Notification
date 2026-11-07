@@ -17,8 +17,30 @@ jobs:
         - name: Set Image Tag
           run: echo "IMAGE_TAG=${{ github.run_number }}-${{ github.sha }}" >> $GITHUB_ENV
 
+        - name: Lint java code
+          run: ./gradlew check
+
+        - name: Run unit tests
+          run: ./gradlew test
+
+        - name: Lint Dockerfile
+          run: hadolint Dockerfile
+
+        - name: Codeql Analysis
+          uses: github/codeql-action/analyze@v2
+          with:
+            category: "/language:java"
+
         - name: Build the Docker image
           run: docker build -t ${{ secrets.username }}/notification-service:${IMAGE_TAG} .
+
+        - name: Scan Docker image for vulnerabilities
+          uses: aquasecurity/trivy-action@master
+          with:
+            image-ref: ${{ secrets.username }}/notification-service:${IMAGE_TAG}
+            format: 'table'
+            exit-code: '1'
+            ignore-unfixed: true
 
         - name: Log in to Docker Hub
           run: echo ${{ secrets.password }} | docker login -u ${{ secrets.username }} --password-stdin
