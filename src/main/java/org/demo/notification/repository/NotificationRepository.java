@@ -1,5 +1,6 @@
 package org.demo.notification.repository;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 import org.demo.notification.model.NotificationMessage;
@@ -13,13 +14,13 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 public interface NotificationRepository extends JpaRepository<NotificationMessage, Long> {
 
-    @Modifying
     @Transactional
     @Query(
-            value = "INSERT INTO notification_message (sender,recipient, title, message, sent_at) VALUES (:sender, :recipient, :title, :message, :sentAt)",
+            value = "INSERT INTO notification_message (sender,recipient, title, message, sent_at) VALUES (:sender, :recipient, :title, :message, :sentAt)" +
+                    "RETURNING message_id",
             nativeQuery = true
     )
-    void send(
+    Long send(
             @Param("sender") String sender,
             @Param("recipient") String recipient,
             @Param("title") String title,

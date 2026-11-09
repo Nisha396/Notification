@@ -5,6 +5,8 @@ import org.demo.notification.repository.NotificationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 @Service
 public class NotificationService {
 
@@ -13,15 +15,17 @@ public class NotificationService {
 
     public String sendNotification(NotificationMessage message) {
 
-        NotificationMessage existingMessage = notificationRepository.findById
-                (message.getMessageId()).orElse(null);
-        if (existingMessage != null) {
-            return "Notification with ID " + message.getMessageId() + " already exists.";
+        if(message.getMessageId() != null) {
+            NotificationMessage existingMessage = notificationRepository.findById
+                    (message.getMessageId()).orElse(null);
+            if (existingMessage != null) {
+                return "Notification with ID " + message.getMessageId() + " already exists.";
+            }
         }
-        notificationRepository.send
-                (message.getSender(), message.getRecipient(), message.getTitle(),
-                        message.getMessage(), message.getSentAt());
-        return "Notification sent!";
+            Long messageId = notificationRepository.send
+                    (message.getSender(), message.getRecipient(), message.getTitle(),
+                            message.getMessage(), LocalDateTime.now());
+        return "Notification sent with messageId generated as " + messageId;
     }
 
     public NotificationMessage getMessage(long messageId) {

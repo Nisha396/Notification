@@ -11,6 +11,7 @@ import org.demo.notification.producer.NotificationProducer;
 import org.demo.notification.service.NotificationService;
 
 import org.demo.notification.consumer.NotificationConsumer;
+import org.springframework.http.ResponseEntity;
 import org.springframework.kafka.support.SendResult;
 
 import java.util.concurrent.CompletableFuture;
@@ -38,8 +39,8 @@ class NotificationControllerTest {
         NotificationMessage msg = new NotificationMessage();
         when(notificationService.sendNotification(msg)).thenReturn("Notification sent!");
 
-        String resp = notificationController.sendNotification(msg);
-        assertEquals("Notification sent!", resp);
+        ResponseEntity<String> resp = notificationController.sendNotification(msg);
+        assertEquals("Notification sent!", resp.getBody());
         verify(notificationService, times(1)).sendNotification(msg);
     }
 

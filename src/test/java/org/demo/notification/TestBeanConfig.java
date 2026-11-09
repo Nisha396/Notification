@@ -10,7 +10,7 @@ import org.springframework.kafka.core.KafkaTemplate;
 public class TestBeanConfig {
 
     @Bean
-    public KafkaTemplate<String, NotificationMessage> kafkaTemplate() {
+    public KafkaTemplate<String, NotificationMessage> kafkaTemplateTest() {
         // Provide a Mockito mock so tests that accidentally load components depending on KafkaTemplate won't fail
         return Mockito.mock(KafkaTemplate.class);
     }

@@ -8,6 +8,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
@@ -49,7 +50,9 @@ class NotificationServiceTest {
 
         String result = notificationService.sendNotification(msg);
         assertEquals("Notification sent!", result);
-        verify(notificationRepository, times(1)).send(eq("alice"), eq("bob"), eq("Hi"), eq("Hello"), any(LocalDateTime.class));
+        verify(notificationRepository, times(1)).
+                send(eq("alice"), eq("bob"), eq("Hi"),
+                        eq("Hello"), any(LocalDateTime.class));
     }
 
     @Test

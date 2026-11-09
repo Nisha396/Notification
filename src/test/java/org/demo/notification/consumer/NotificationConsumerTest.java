@@ -31,12 +31,11 @@ class NotificationConsumerTest {
         msg.setTitle("Hello");
         msg.setMessage("World");
 
-        ConsumerRecord<String, NotificationMessage> record = new ConsumerRecord<>("topic", 0, 0L, "key", msg);
         Acknowledgment ack = mock(Acknowledgment.class);
 
         doNothing().when(notificationRepository).send(anyString(), anyString(), anyString(), anyString(), any());
 
-        consumer.consumeNotification(record, ack);
+        consumer.consumeNotification(msg, ack);
 
         verify(notificationRepository, times(1)).send(eq("alice"), eq("bob"), eq("Hello"), eq("World"), any());
         verify(ack, times(1)).acknowledge();
@@ -56,7 +55,7 @@ class NotificationConsumerTest {
 
         doThrow(new RuntimeException("db-fail")).when(notificationRepository).send(anyString(), anyString(), anyString(), anyString(), any());
 
-        consumer.consumeNotification(record, ack);
+        consumer.consumeNotification(msg, ack);
 
         verify(notificationRepository, times(1)).send(anyString(), anyString(), anyString(), anyString(), any());
         verify(ack, never()).acknowledge();

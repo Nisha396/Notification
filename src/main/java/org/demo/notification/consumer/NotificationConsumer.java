@@ -1,6 +1,6 @@
 package org.demo.notification.consumer;
 
-import org.apache.kafka.clients.consumer.ConsumerRecord;
+import lombok.extern.slf4j.Slf4j;
 import org.demo.notification.model.NotificationMessage;
 import org.demo.notification.repository.NotificationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,19 +8,23 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 @Service
+@Slf4j
 public class NotificationConsumer {
 
     @Autowired
     private NotificationRepository notificationRepository;
 
-    @KafkaListener(topics = "${spring.kafka.producer.topic}", groupId = "notification-worker-group", concurrency = "3")
-    public void consumeNotification(ConsumerRecord<String, NotificationMessage> record, Acknowledgment ack) {
+    @KafkaListener(topics = "notification-topic", groupId = "notification-worker-group", concurrency = "3")
+    public void consumeNotification(NotificationMessage message, Acknowledgment ack) {
         try {
-            NotificationMessage request = record.value();
+            System.out.println(">>> RECEIVED BY SPRING BOOT LISTENER: " + message);
 
             // Execute the business logic (e.g., Calling Email/SMS Gateway gateways)
-            processDelivery(request);
+            Long messageId= processDelivery(message);
+            log.info("MessageId saved in DB is {}", messageId);
 
             // Manually commit offset ONLY after successful execution to guarantee at-least-once delivery
             ack.acknowledge();
@@ -31,9 +35,9 @@ public class NotificationConsumer {
         }
     }
 
-    private void processDelivery(NotificationMessage message) {
-        notificationRepository.send
+    private Long processDelivery(NotificationMessage message) {
+        return notificationRepository.send
                 (message.getSender(), message.getRecipient(), message.getTitle(),
-                        message.getMessage(), message.getSentAt());
+                        message.getMessage(), LocalDateTime.now());
     }
 }
