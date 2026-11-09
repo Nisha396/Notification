@@ -33,7 +33,7 @@ class NotificationConsumerTest {
 
         Acknowledgment ack = mock(Acknowledgment.class);
 
-        doNothing().when(notificationRepository).send(anyString(), anyString(), anyString(), anyString(), any());
+        when(notificationRepository.send(anyString(), anyString(), anyString(), anyString(), any())).thenReturn(1L);
 
         consumer.consumeNotification(msg, ack);
 

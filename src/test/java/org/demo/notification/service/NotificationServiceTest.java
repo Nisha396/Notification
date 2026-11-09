@@ -39,17 +39,14 @@ class NotificationServiceTest {
     @Test
     void sendNotification_whenNotExists_savesAndReturnsSent() {
         NotificationMessage msg = new NotificationMessage();
-        msg.setMessageId(2L);
         msg.setSender("alice");
         msg.setRecipient("bob");
         msg.setTitle("Hi");
         msg.setMessage("Hello");
         msg.setSentAt(LocalDateTime.now());
 
-        when(notificationRepository.findById(2L)).thenReturn(Optional.empty());
-
         String result = notificationService.sendNotification(msg);
-        assertEquals("Notification sent!", result);
+        assertEquals("Notification sent with messageId generated as 0", result);
         verify(notificationRepository, times(1)).
                 send(eq("alice"), eq("bob"), eq("Hi"),
                         eq("Hello"), any(LocalDateTime.class));
